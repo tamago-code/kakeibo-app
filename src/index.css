@@ -1,0 +1,162 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #fff;
+  --text: #222;
+  --muted: #777;
+  --border: #e2e4e8;
+  --accent: #2f6fde;
+  --danger: #c0392b;
+  font-family: system-ui, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+}
+
+h3 {
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.upload {
+  display: block;
+  padding: 24px;
+  border: 2px dashed var(--accent);
+  border-radius: 8px;
+  text-align: center;
+  color: var(--accent);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.upload.disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.upload input {
+  display: none;
+}
+
+.error {
+  color: var(--danger);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.toolbar h2 {
+  margin: 0;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart {
+  min-width: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.summary {
+  margin-top: 16px;
+}
+
+.summary .grand td {
+  font-weight: bold;
+  border-bottom: none;
+}
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 6px;
+}
+
+.receipt {
+  margin-bottom: 20px;
+}
+
+.receipt-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+
+.receipt-head .total {
+  margin-left: auto;
+  font-weight: bold;
+}
+
+button {
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  background: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+}

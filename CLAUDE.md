@@ -1,10 +1,21 @@
 # kakeibo-app
 
-家計簿アプリ。
+レシート画像を Claude API で読み取る家計簿Webアプリ。個人がローカルPCで使う前提。
 
 ## 技術スタック
 
-未定(決まり次第ここに追記する)。
+- フロントエンド: React + Vite(`src/`)、グラフは Chart.js(react-chartjs-2)
+- バックエンド: Node.js + Express(`server/index.js`)。Claude API はここからのみ呼ぶ
+- モデル: `claude-haiku-5-5`
+- データ保存: ブラウザの localStorage(キー `kakeibo.receipts.v1`)
+- カテゴリ一覧は `server/index.js` と `src/categories.js` の2か所にあり、変更時は両方そろえる
+
+## コマンド
+
+- `npm run dev`: APIサーバー(127.0.0.1:3001)と Vite 開発サーバーを同時起動
+- `npm run build`: フロントエンドをビルド(変更後の確認に使う)
+- `npm start`: ビルド済みの `dist/` を Express から配信
+- APIキーは `.env` の `ANTHROPIC_API_KEY` に書く(`.env.example` を参照)
 
 ## Git運用ルール
 
