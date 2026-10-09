@@ -160,3 +160,16 @@ button {
   padding: 2px 8px;
   cursor: pointer;
 }
+
+.warning {
+  color: #8a5a00;
+  background: #fff6e0;
+  border: 1px solid #f0d58c;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.negative {
+  color: var(--danger);
+  font-weight: bold;
+}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadReceipts, saveReceipts } from "./storage.js";
 import { resizeImage } from "./resizeImage.js";
+import { findDuplicate, negativePriceWarning, receiptTotal, yen } from "./validation.js";
 import ReceiptList from "./ReceiptList.jsx";
 import Charts from "./Charts.jsx";
 
@@ -10,6 +11,7 @@ export default function App() {
   const [receipts, setReceipts] = useState(loadReceipts);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [warning, setWarning] = useState("");
   const [month, setMonth] = useState("all");
 
   useEffect(() => saveReceipts(receipts), [receipts]);
@@ -26,6 +28,7 @@ export default function App() {
 
     setLoading(true);
     setError("");
+    setWarning("");
     try {
       const form = new FormData();
       form.append("image", await resizeImage(file), "receipt.jpg");
@@ -41,7 +44,20 @@ export default function App() {
         date: /^\d{4}-\d{2}-\d{2}$/.test(data.date) ? data.date : today(),
         items: data.items,
       };
+
+      const dup = findDuplicate(receipts, receipt);
+      if (
+        dup &&
+        !confirm(
+          `${dup.date} に合計 ${yen(receiptTotal(dup))} のレシート(${dup.store})が既に登録されています。\n重複の可能性がありますが、登録しますか?`,
+        )
+      ) {
+        setWarning("重複の可能性があるため、登録を取り消しました。");
+        return;
+      }
+
       setReceipts((prev) => [receipt, ...prev]);
+      setWarning(negativePriceWarning(receipt) ?? "");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -73,6 +89,7 @@ export default function App() {
           {loading ? "読み取り中…" : "レシート画像をアップロード"}
         </label>
         {error && <p className="error">{error}</p>}
+        {warning && <p className="warning">{warning}</p>}
       </section>
 
       <section className="card">

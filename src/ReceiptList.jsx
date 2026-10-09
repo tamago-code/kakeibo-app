@@ -1,6 +1,5 @@
 import { CATEGORIES } from "./categories.js";
-
-const yen = (n) => `¥${n.toLocaleString()}`;
+import { receiptTotal, yen } from "./validation.js";
 
 export default function ReceiptList({ receipts, onUpdate, onDelete }) {
   if (receipts.length === 0) {
@@ -19,7 +18,7 @@ export default function ReceiptList({ receipts, onUpdate, onDelete }) {
         <div className="receipt-head">
           <input type="date" value={r.date} onChange={(e) => e.target.value && onUpdate(r.id, { date: e.target.value })} />
           <strong>{r.store}</strong>
-          <span className="total">{yen(r.items.reduce((s, it) => s + it.price, 0))}</span>
+          <span className="total">{yen(receiptTotal(r))}</span>
           <button onClick={() => onDelete(r.id)} aria-label="削除">
             削除
           </button>
@@ -36,7 +35,9 @@ export default function ReceiptList({ receipts, onUpdate, onDelete }) {
                     ))}
                   </select>
                 </td>
-                <td className="num">{yen(it.price)}</td>
+                <td className={it.price < 0 ? "num negative" : "num"} title={it.price < 0 ? "マイナスの金額です。値引き以外なら読み取りミスの可能性があります" : undefined}>
+                  {yen(it.price)}
+                </td>
               </tr>
             ))}
           </tbody>
